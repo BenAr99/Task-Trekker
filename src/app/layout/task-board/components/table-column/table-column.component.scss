@@ -1,0 +1,29 @@
+:host {
+  padding: 10px;
+  background: #fbfbff;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  border-radius: 10px;
+  border: 3px solid transparent;
+}
+
+.host:hover {
+  transition: 0.5s;
+  border: 3px solid #d0dafa;
+}
+
+.card-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}

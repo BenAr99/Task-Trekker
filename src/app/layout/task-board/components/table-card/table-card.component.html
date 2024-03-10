@@ -1,0 +1,16 @@
+<div *ngIf="task as task">
+  <div class="title">
+    <span>{{ task.title }}</span>
+  </div>
+
+  <div class="priority">
+    <span>{{ priorityMap[task.priority] }}</span>
+  </div>
+
+  <div class="row-item">
+    <div class="icon-executor">
+      <span class="name-executor">{{ task.executor.name.split('')[0] }}</span>
+    </div>
+    <span class="deadline-date">{{ task.deadlineDate | date :'shortDate' }}</span>
+  </div>
+</div>

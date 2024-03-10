@@ -1,16 +1,25 @@
 import { Component, DoCheck } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { Priority, Status } from '../../shared/models/interfaces/task.interface';
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
-
+import {
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  NgForm,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ErrorStateMatcher, MatOptionModule } from '@angular/material/core';
+import { Priority, Status, User } from '../../shared/models/interfaces/task.interface';
+import { Router } from '@angular/router';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { TaskDataService } from '../task-board/services/task-data.service';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CommonModule } from '@angular/common';
+import { UserDataService } from '../task-board/services/user-data.service';
+import { Observable } from 'rxjs';
+import { PRIORITY_OPTIONS } from '../../shared/constants/priority.const';
 interface CreateTaskForm {
   title: FormControl<string | null>;
   description: FormControl<string | null>;
@@ -19,22 +28,35 @@ interface CreateTaskForm {
   deadlineDate: FormControl<Date | null>;
   executorId: FormControl<string | null>;
 }
-/** @title Input with a custom ErrorStateMatcher */
+
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.scss',
+  imports: [
+    MatOptionModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    CommonModule,
+  ],
+  standalone: true,
 })
-export class CreateTaskComponent implements DoCheck {
-  selected = 'option2';
-  formGroup: FormGroup;
-  titleFormControl = new FormControl('', [Validators.required]);
-  descriptionFormControl = new FormControl('', [Validators.required]);
-  // descriptionFormControl = new FormControl('', [Validators.required]);
-  matcher = new MyErrorStateMatcher();
+export class CreateTaskComponent {
+  createCardForm: FormGroup;
+  userList: Observable<User[]>;
+  priority = PRIORITY_OPTIONS;
 
-  constructor() {
-    this.formGroup = new FormGroup<CreateTaskForm>({
+  constructor(
+    private router: Router,
+    private taskDataService: TaskDataService,
+    private userData: UserDataService,
+  ) {
+    this.userList = this.getUsers();
+    this.createCardForm = new FormGroup<CreateTaskForm>({
       title: new FormControl(null, [Validators.required]),
       description: new FormControl(null, [Validators.required]),
       status: new FormControl(Status.Open, [Validators.required]),
@@ -43,15 +65,17 @@ export class CreateTaskComponent implements DoCheck {
       executorId: new FormControl(null, [Validators.required]),
     });
   }
-  ngDoCheck() {
-    console.log('прикол');
-    // console.log(this.titleFormControl.errors);
-    // console.log(this.titleFormControl);
+  getUsers() {
+    return this.userData.getUsers();
   }
-
-  test() {
-    console.log(this.formGroup);
-    console.log(this.formGroup.value);
+  createTask() {
+    if (this.createCardForm.valid) {
+      this.taskDataService.createTask(this.createCardForm.value).subscribe(() => {
+        this.router.navigate([`/table-task`]);
+      });
+    } else {
+      this.createCardForm.markAllAsTouched();
+    }
   }
 }
 // ДЛЯ ОПИСАНИЯ TEXT AREA

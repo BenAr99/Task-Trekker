@@ -1,32 +1,45 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DefaultComponent } from './layout/default/default.component';
-import { CreateTaskComponent } from './layout/create-task/create-task.component';
-import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-
+import { TaskBoardModule } from './layout/task-board/task-board.module';
+import { CreateTaskComponent } from './layout/create-task/create-task.component';
+import { User } from './shared/models/interfaces/task.interface';
+registerLocaleData(localeRu, 'ru');
 @NgModule({
-  declarations: [AppComponent, DefaultComponent, CreateTaskComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatInputModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule,
+    TaskBoardModule,
+    CreateTaskComponent,
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    const users: User[] = [
+      {
+        name: 'Дезмонд',
+        id: '0',
+      },
+      {
+        name: 'Геральд',
+        id: '1',
+      },
+      {
+        name: 'Валли',
+        id: '2',
+      },
+    ];
+    localStorage.setItem('users', JSON.stringify(users));
+  }
+}

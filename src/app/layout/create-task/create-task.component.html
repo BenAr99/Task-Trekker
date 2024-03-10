@@ -1,24 +1,25 @@
 <div class="card">
-  <p class="header-card">New task</p>
-  <form [formGroup]="formGroup" class="example-form">
+  <p class="header-card">Новая задача</p>
+  <form [formGroup]="createCardForm" class="example-form">
     <mat-form-field class="example-full-width">
-      <mat-label>Title</mat-label>
-      <input type="text" matInput formControlName="title" [errorStateMatcher]="matcher">
-      @if (titleFormControl.hasError('required')) {
-        <mat-error>Title is <strong>required</strong></mat-error>
+      <mat-label>Название</mat-label>
+      <input type="text" matInput formControlName="title">
+      @if (createCardForm.get('title')?.hasError('required')) {
+        <mat-error>Требуется <strong>название</strong></mat-error>
       }
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <mat-label>Description</mat-label>
-      <input type="text" matInput formControlName="description" [errorStateMatcher]="matcher">
-      @if (descriptionFormControl.hasError('required')) {
-        <mat-error>Description is <strong>required</strong></mat-error>
+      <mat-label>Описание</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+      @if (createCardForm.get('description')?.hasError('required')) {
+        <mat-error>Требуется <strong>описание</strong></mat-error>
       }
     </mat-form-field>
+
 
     <div class="grid-input">
-    <mat-form-field  class="example-full-width" appearance="fill">
+      <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Выберите дату</mat-label>
         <input matInput formControlName="deadlineDate" [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -26,29 +27,29 @@
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
-        <mat-label>Select an option</mat-label>
-        <mat-select formControlName="executorId">
-          <mat-option>None</mat-option>
-          <mat-option value="option1">Option 1</mat-option>
-          <mat-option value="option2">Option 2</mat-option>
-          <mat-option value="option3">Option 3</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Select an status</mat-label>
+        <mat-label>Выберите приоритет</mat-label>
         <mat-select formControlName="priority">
-          <mat-option>None</mat-option>
-          <mat-option value="option1">Low</mat-option>
-          <mat-option value="option2">Medium</mat-option>
-          <mat-option value="option3">Hard</mat-option>
+          <mat-option [value]="item.value" *ngFor="let item of priority">{{ item.label }}</mat-option>
+
         </mat-select>
       </mat-form-field>
     </div>
 
+    <mat-form-field class="example-full-width">
+      <mat-label>Select an option</mat-label>
+      <mat-select formControlName="executorId">
+        <ng-container *ngIf="(userList | async) as users">
+          <mat-option [value]="user.id" *ngFor="let user of users">
+            {{ user.name }}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
 
   </form>
-  <button (click)="test()" mat-flat-button color="primary"><strong>Create Task</strong></button>
+  <button (click)="createTask()" mat-flat-button color="primary"><strong>Создать</strong></button>
 </div>
+
 
 

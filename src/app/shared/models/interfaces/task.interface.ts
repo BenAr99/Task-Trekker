@@ -22,8 +22,6 @@ export interface User {
   name: string;
 }
 
-export type CreateTask =
-  | Omit<Task, 'executor'>
-  | {
-      executorId: string;
-    };
+export type CreateTask = Omit<Task, 'executor'> & {
+  executorId: string;
+};
