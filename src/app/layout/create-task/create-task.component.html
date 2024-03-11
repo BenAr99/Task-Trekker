@@ -33,18 +33,29 @@
 
         </mat-select>
       </mat-form-field>
-    </div>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Select an option</mat-label>
-      <mat-select formControlName="executorId">
-        <ng-container *ngIf="(userList | async) as users">
-          <mat-option [value]="user.id" *ngFor="let user of users">
-            {{ user.name }}
-          </mat-option>
-        </ng-container>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Выберите статус</mat-label>
+        <mat-select formControlName="status">
+          <ng-container *ngIf="(statusList | async) as statuses">
+            <mat-option [value]="status" *ngFor="let status of statuses">
+              {{ status.name }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Выберите исполнителя</mat-label>
+        <mat-select formControlName="executorId">
+          <ng-container *ngIf="(userList | async) as users">
+            <mat-option [value]="user.id" *ngFor="let user of users">
+              {{ user.name }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
 
   </form>

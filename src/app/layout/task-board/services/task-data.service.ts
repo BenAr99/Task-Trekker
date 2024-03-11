@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CreateTask, Task, User } from '../../../shared/models/interfaces/task.interface';
+import {
+  CreateTask,
+  TaskColumn,
+  Task,
+  User,
+} from '../../../shared/models/interfaces/task.interface';
 import { map, Observable, tap, timer } from 'rxjs';
 
 @Injectable({
@@ -24,6 +29,7 @@ export class TaskDataService {
         return JSON.parse(localStorage.getItem('tasks') ?? '[]') as CreateTask[];
       }),
       map((createTaskList) => {
+        // поправильному users брать с user-data.service
         const users = JSON.parse(localStorage.getItem('users') as string) as User[];
         return createTaskList.map((task) => {
           const user = users.find((value) => {
@@ -36,4 +42,6 @@ export class TaskDataService {
       }),
     );
   }
+
+  // filterTask(task) {}
 }

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-column',
@@ -7,4 +8,8 @@ import { Component, Input } from '@angular/core';
 })
 export class TableColumnComponent {
   @Input() title?: string;
+  constructor(private router: Router) {}
+  addTask() {
+    this.router.navigate(['/create-task']);
+  }
 }

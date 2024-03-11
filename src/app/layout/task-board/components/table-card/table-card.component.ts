@@ -11,10 +11,7 @@ export class TableCardComponent implements OnInit {
   @Input() task?: Task;
   priorityMap = PRIORITY_MAP;
 
-  ngOnInit() {
-    console.log(this.task?.executor?.name.split('')[0]);
-    console.log(this.task);
-  }
+  ngOnInit() {}
 
   constructor() {}
 }

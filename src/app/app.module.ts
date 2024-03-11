@@ -9,7 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { TaskBoardModule } from './layout/task-board/task-board.module';
 import { CreateTaskComponent } from './layout/create-task/create-task.component';
-import { User } from './shared/models/interfaces/task.interface';
+import { TaskColumn, User } from './shared/models/interfaces/task.interface';
+
 registerLocaleData(localeRu, 'ru');
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,26 @@ registerLocaleData(localeRu, 'ru');
   bootstrap: [AppComponent],
 })
 export class AppModule {
+  // имитация бэка
   constructor() {
+    const statuses: TaskColumn[] = [
+      {
+        name: 'Открыты',
+        id: '0',
+      },
+      {
+        name: 'В процессе',
+        id: '1',
+      },
+      {
+        name: 'Проверка',
+        id: '2',
+      },
+      {
+        name: 'Закрыта',
+        id: '3',
+      },
+    ];
     const users: User[] = [
       {
         name: 'Дезмонд',
@@ -40,6 +60,9 @@ export class AppModule {
         id: '2',
       },
     ];
+    if (!localStorage.getItem('statuses')) {
+      localStorage.setItem('statuses', JSON.stringify(statuses));
+    }
     localStorage.setItem('users', JSON.stringify(users));
   }
 }

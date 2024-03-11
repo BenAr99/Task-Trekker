@@ -1,27 +1,44 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TaskDataService } from '../../services/task-data.service';
-import { Task } from '../../../../shared/models/interfaces/task.interface';
+import { TaskColumn, Task } from '../../../../shared/models/interfaces/task.interface';
+import { TaskColumnService } from '../../services/task-column.service';
 
 @Component({
   selector: 'app-table-task',
   templateUrl: './table-task.component.html',
   styleUrl: './table-task.component.scss',
 })
-export class TableTaskComponent implements OnInit, AfterViewInit {
+export class TableTaskComponent implements OnInit {
   tasks!: Task[];
   InProgress: Task[] = [];
   verification: Task[] = [];
   closed: Task[] = [];
-  constructor(public taskDataService: TaskDataService) {}
+  taskColumnList!: TaskColumn[];
+  taskToTaskColumn?: Task[][];
+  constructor(
+    public taskDataService: TaskDataService,
+    private taskColumnService: TaskColumnService,
+  ) {}
   ngOnInit() {
-    this.taskDataService.getTask().subscribe((value) => {
-      this.tasks = value;
+    this.taskColumnService.getTaskColumn().subscribe((valueColumn) => {
+      this.taskDataService.getTask().subscribe((value) => {
+        this.tasks = value;
+        this.taskColumnList = valueColumn;
+        this.taskToTaskColumn = this.mapTaskToTaskColumn();
+        console.log(this.taskToTaskColumn);
+        console.log(this.taskToTaskColumn[0]);
+      });
     });
   }
 
-  ngAfterViewInit() {
-    console.log(this.tasks);
+  mapTaskToTaskColumn() {
+    return this.taskColumnList.map((taskColumn) => {
+      return this.tasks.filter((task) => {
+        console.log(task);
+        return task.status.id === taskColumn.id;
+      });
+    });
   }
 
   drop(event: CdkDragDrop<Task[]>) {

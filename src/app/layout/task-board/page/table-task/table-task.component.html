@@ -1,52 +1,19 @@
-<ng-container cdkDropListGroup>
-  <app-table-column [title]="'Открытые Задачи'"
-                    cdkDropList
-                    [cdkDropListData]="tasks"
-                    class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-
-    <app-table-card
-      cdkDrag
-      *ngFor="let task of tasks"
-      [task]="task"
-    ></app-table-card>
-  </app-table-column>
-
-  <app-table-column [title]="'В процессе'"
-                    cdkDropList
-                    [cdkDropListData]="InProgress"
-                    class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-    <app-table-card
-      cdkDrag
-      *ngFor="let task of InProgress"
-      [task]="task"
-    ></app-table-card>
-  </app-table-column>
-
-  <app-table-column [title]="'Требуется проверка'"
-                    cdkDropList
-                    [cdkDropListData]="verification"
-                    class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-    <app-table-card
-      cdkDrag
-      *ngFor="let task of verification"
-      [task]="task"
-    ></app-table-card>
-  </app-table-column>
-
-  <app-table-column [title]="'Закрыто'"
-                    cdkDropList
-                    [cdkDropListData]="closed"
-                    class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-    <app-table-card
-      cdkDrag
-      *ngFor="let task of closed"
-      [task]="task"
-    ></app-table-card>
-  </app-table-column>
+<ng-container *ngIf="taskToTaskColumn" cdkDropListGroup>
+  @for (item of taskColumnList ; track item; let i = $index) {
+    <app-table-column
+      [title]="item.name"
+      cdkDropList
+      [cdkDropListData]="taskToTaskColumn[i]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <app-table-card
+        cdkDrag
+        *ngFor="let task of taskToTaskColumn[i] "
+        [task]="task"
+      ></app-table-card>
+    </app-table-column>
+  }
 </ng-container>
 
 
