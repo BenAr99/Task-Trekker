@@ -3,7 +3,7 @@
     <span>{{ task.title }}</span>
   </div>
 
-  <div class="priority">
+  <div [appPriorityColor]="priorityMap[task.priority]" class="priority">
     <span>{{ priorityMap[task.priority] }}</span>
   </div>
 

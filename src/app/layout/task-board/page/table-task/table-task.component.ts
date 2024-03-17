@@ -1,7 +1,7 @@
-import { Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TaskDataService } from '../../services/task-data.service';
-import { TaskColumn, Task } from '../../../../shared/models/interfaces/task.interface';
+import { Task, TaskColumn } from '../../../../shared/models/interfaces/task.interface';
 import { TaskColumnService } from '../../services/task-column.service';
 
 @Component({
@@ -11,13 +11,10 @@ import { TaskColumnService } from '../../services/task-column.service';
 })
 export class TableTaskComponent implements OnInit {
   tasks!: Task[];
-  InProgress: Task[] = [];
-  verification: Task[] = [];
-  closed: Task[] = [];
   taskColumnList!: TaskColumn[];
-  taskToTaskColumn?: Task[][];
+  taskToTaskColumn?: Record<string, Task[]>;
   constructor(
-    public taskDataService: TaskDataService,
+    private taskDataService: TaskDataService,
     private taskColumnService: TaskColumnService,
   ) {}
   ngOnInit() {
@@ -26,25 +23,34 @@ export class TableTaskComponent implements OnInit {
         this.tasks = value;
         this.taskColumnList = valueColumn;
         this.taskToTaskColumn = this.mapTaskToTaskColumn();
-        console.log(this.taskToTaskColumn);
-        console.log(this.taskToTaskColumn[0]);
       });
     });
   }
 
   mapTaskToTaskColumn() {
-    return this.taskColumnList.map((taskColumn) => {
-      return this.tasks.filter((task) => {
-        console.log(task);
-        return task.status.id === taskColumn.id;
-      });
-    });
+    return this.taskColumnList.reduce((acc: Record<string, Task[]>, taskColumn) => {
+      acc[taskColumn.id] = this.tasks.filter((task) => task.status.id === taskColumn.id);
+      return acc;
+    }, {});
   }
 
-  drop(event: CdkDragDrop<Task[]>) {
+  drop(event: CdkDragDrop<Task[]>, status: TaskColumn) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      this.taskDataService
+        .transferTask(event.previousContainer.data[event.currentIndex], status)
+        .subscribe();
+      // нет смысла в таск колумн отдавать, потому что он каждый раз генерируется, с той же логикой
+      // и нет смысла отслеживать его индекс, хотя этот индекс показывает статус..
+      // возможно стоит поменять ид статуса у самой карточки и ебаться не придется
+
+      // console.log(status, 'statusId');
+      // console.log(event.previousContainer.data, 'hyeta');
+      // console.log(event.container.data, 'data');
+      // console.log(event.previousIndex, 'index');
+      // console.log(event.currentIndex, 'CurrentIndex');
+      // console.log('test');
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -53,4 +59,6 @@ export class TableTaskComponent implements OnInit {
       );
     }
   }
+
+  protected readonly Object = Object;
 }

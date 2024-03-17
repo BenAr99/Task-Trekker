@@ -6,10 +6,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { TableCardComponent } from './components/table-card/table-card.component';
 import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
+import { PriorityColorDirective } from '../../shared/directives/priority-color.directive';
 
 @NgModule({
   declarations: [TableColumnComponent, TableTaskComponent, TableCardComponent],
-  imports: [CommonModule, MatButtonModule, CdkDropList, CdkDrag, CdkDropListGroup, MatIconModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDropListGroup,
+    MatIconModule,
+    PriorityColorDirective,
+  ],
   exports: [TableTaskComponent, TableColumnComponent],
 })
 export class TaskBoardModule {}

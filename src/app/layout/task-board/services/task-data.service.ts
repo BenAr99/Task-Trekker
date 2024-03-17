@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   CreateTask,
-  TaskColumn,
   Task,
+  TaskColumn,
   User,
 } from '../../../shared/models/interfaces/task.interface';
 import { map, Observable, tap, timer } from 'rxjs';
@@ -11,10 +11,27 @@ import { map, Observable, tap, timer } from 'rxjs';
   providedIn: 'root',
 })
 export class TaskDataService {
-  taskData?: Task;
-  constructor() {}
+  transferTask(task: Task, column: TaskColumn) {
+    // почему я должен ставить таймер, когда имитирую отправку на бэк? Не должен же?
+    return timer(1000).pipe(
+      tap(() => {
+        const tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as CreateTask[];
+        tasks.find((value, index) => {
+          if (
+            value.title === task.title &&
+            value.description === task.description &&
+            value.status.id === task.status.id
+          ) {
+            tasks[index].status.id = column.id;
+          }
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+      }),
+    );
+  }
 
   createTask(newTask: CreateTask) {
+    // почему я должен ставить таймер, когда имитирую отправку на бэк? Не должен же?
     return timer(1000).pipe(
       tap(() => {
         const tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as CreateTask[];

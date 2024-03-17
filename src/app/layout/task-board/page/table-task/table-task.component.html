@@ -1,15 +1,17 @@
+
+
 <ng-container *ngIf="taskToTaskColumn" cdkDropListGroup>
-  @for (item of taskColumnList ; track item; let i = $index) {
+  @for (item of taskColumnList; track item; let i = $index) {
     <app-table-column
       [title]="item.name"
       cdkDropList
-      [cdkDropListData]="taskToTaskColumn[i]"
+      [cdkDropListData]="taskToTaskColumn[item.id]"
       class="example-list"
-      (cdkDropListDropped)="drop($event)"
+      (cdkDropListDropped)="drop($event, item)"
     >
       <app-table-card
         cdkDrag
-        *ngFor="let task of taskToTaskColumn[i] "
+        *ngFor="let task of taskToTaskColumn[item.id] "
         [task]="task"
       ></app-table-card>
     </app-table-column>
