@@ -1,6 +1,11 @@
+<header>
+  <input class="search-input" placeholder="Поиск">
+  <button (click)="openDialog()" mat-mini-fab color="primary">
+    <mat-icon>list</mat-icon>
+  </button>
+</header>
 
-
-<ng-container *ngIf="taskToTaskColumn" cdkDropListGroup>
+<div class="column-table"  *ngIf="taskToTaskColumn" cdkDropListGroup>
   @for (item of taskColumnList; track item; let i = $index) {
     <app-table-column
       [title]="item.name"
@@ -16,6 +21,6 @@
       ></app-table-card>
     </app-table-column>
   }
-</ng-container>
+</div>
 
 

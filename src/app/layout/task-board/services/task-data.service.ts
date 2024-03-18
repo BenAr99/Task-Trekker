@@ -15,6 +15,7 @@ export class TaskDataService {
     // почему я должен ставить таймер, когда имитирую отправку на бэк? Не должен же?
     return timer(1000).pipe(
       tap(() => {
+        console.log(task, 'в начале приходит ли карта');
         const tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as CreateTask[];
         tasks.find((value, index) => {
           if (
@@ -25,6 +26,7 @@ export class TaskDataService {
             tasks[index].status.id = column.id;
           }
         });
+        console.log('я тут');
         localStorage.setItem('tasks', JSON.stringify(tasks));
       }),
     );

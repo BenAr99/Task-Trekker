@@ -1,7 +1,27 @@
 :host {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.search-input {
+  padding: 8px 10px;
+  outline: none;
+  background: #f7f9ff;
+  border-radius: 10px;
+  border: 1px solid #c2c2c2;
+  margin-right: 10px;
+}
+
+.column-table {
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: repeat(auto-fill, 1fr);
   grid-column-gap: 40px;
   overflow-x: auto;
   padding: 20px;

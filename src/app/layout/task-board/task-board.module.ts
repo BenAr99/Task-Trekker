@@ -7,9 +7,17 @@ import { TableCardComponent } from './components/table-card/table-card.component
 import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { PriorityColorDirective } from '../../shared/directives/priority-color.directive';
+import { MatInputModule } from '@angular/material/input';
+import { SettingModalComponent } from './components/setting-modal/setting-modal.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [TableColumnComponent, TableTaskComponent, TableCardComponent],
+  declarations: [
+    TableColumnComponent,
+    TableTaskComponent,
+    TableCardComponent,
+    SettingModalComponent,
+  ],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -18,6 +26,8 @@ import { PriorityColorDirective } from '../../shared/directives/priority-color.d
     CdkDropListGroup,
     MatIconModule,
     PriorityColorDirective,
+    MatInputModule,
+    MatSelectModule,
   ],
   exports: [TableTaskComponent, TableColumnComponent],
 })
