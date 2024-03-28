@@ -8,11 +8,9 @@ import { Router } from '@angular/router';
   templateUrl: './table-card.component.html',
   styleUrl: './table-card.component.scss',
 })
-export class TableCardComponent implements OnInit {
+export class TableCardComponent {
   @Input() task?: Task;
   priorityMap = PRIORITY_MAP;
-
-  ngOnInit() {}
 
   constructor(private router: Router) {}
   detailTask() {

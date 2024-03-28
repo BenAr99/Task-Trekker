@@ -25,7 +25,7 @@ export class BoardSettingModalComponent implements OnInit, OnDestroy {
   sortType?: string;
   sortOption?: string;
   filterType?: string;
-  filterOption?: string | Priority; // todo Важно подумать насчет типов
+  filterOption?: string | Priority;
   usersList!: User[];
   currentPriority = PRIORITY_OPTIONS;
 
@@ -53,7 +53,6 @@ export class BoardSettingModalComponent implements OnInit, OnDestroy {
     this.taskDataService.getTask().subscribe((value) => {
       this.tasks = value;
     });
-    // Я решил, что перед фильтрем, будет использована сортировка
     this.taskDataService.tasksBehaviorSubject.subscribe((value) => {
       this.changeableTasks = value;
     });

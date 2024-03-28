@@ -78,7 +78,6 @@ export class TableBoardComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(BoardSettingModalComponent);
     dialogRef.closed.subscribe((value) => {
-      // todo выебывался в value, не давал задать явный тип, якобы он там должен ожидать any/unknown
       this.changeTasks = value as Task[];
     });
   }

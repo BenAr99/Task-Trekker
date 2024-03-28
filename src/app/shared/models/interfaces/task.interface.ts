@@ -14,13 +14,6 @@ export interface Status {
   name: string;
 }
 
-// export enum Status {
-//   Open,
-//   InProgress,
-//   Verification,
-//   Done,
-// }
-
 export interface CreateTaskForm {
   title: FormControl<string | null>;
   description: FormControl<string | null>;

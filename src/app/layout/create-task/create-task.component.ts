@@ -50,7 +50,7 @@ export class CreateTaskComponent {
       description: new FormControl(null, [Validators.required]),
       status: new FormControl(null, [Validators.required]),
       priority: new FormControl(null, [Validators.required]),
-      deadlineDate: new FormControl(null, [Validators.required]), // маску юзнуть
+      deadlineDate: new FormControl(null, [Validators.required]),
       executorId: new FormControl(null, [Validators.required]),
     });
   }
