@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableTaskComponent } from './table-task.component';
+import { DetailCardComponent } from './detail-card.component';
 
-describe('TableTaskComponent', () => {
-  let component: TableTaskComponent;
-  let fixture: ComponentFixture<TableTaskComponent>;
+describe('DetailCardComponent', () => {
+  let component: DetailCardComponent;
+  let fixture: ComponentFixture<DetailCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TableTaskComponent]
+      declarations: [DetailCardComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TableTaskComponent);
+    fixture = TestBed.createComponent(DetailCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

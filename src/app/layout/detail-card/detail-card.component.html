@@ -1,0 +1,45 @@
+<div class="card">
+  <p class="header-card">Детали задачи</p>
+  <form [formGroup]="createCardForm" class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Название</mat-label>
+      <input type="text" matInput formControlName="title">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Описание</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+
+    <div class="grid-input">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Дата</mat-label>
+        <input matInput formControlName="deadlineDate">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Приоритет</mat-label>
+        <input matInput formControlName="priority">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Статус</mat-label>
+        <input matInput formControlName="status">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Выберите исполнителя</mat-label>
+        <mat-select  formControlName="executorId">
+          <mat-option [value]="user.id" *ngFor="let user of users">
+            {{user.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+  <button (click)="saveTask()" mat-flat-button color="primary"><strong>Сохранить</strong></button>
+</div>
+
+
+

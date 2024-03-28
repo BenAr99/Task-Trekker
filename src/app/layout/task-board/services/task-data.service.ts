@@ -1,21 +1,15 @@
 import { Injectable } from '@angular/core';
-import {
-  CreateTask,
-  Task,
-  TaskColumn,
-  User,
-} from '../../../shared/models/interfaces/task.interface';
-import { map, Observable, tap, timer } from 'rxjs';
+import { CreateTask, Task, User } from '../../../shared/models/interfaces/task.interface';
+import { BehaviorSubject, map, Observable, tap, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskDataService {
-  transferTask(task: Task, column: TaskColumn) {
-    // почему я должен ставить таймер, когда имитирую отправку на бэк? Не должен же?
+  tasksBehaviorSubject: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([]);
+  transferTask(task: Task, columnId: string) {
     return timer(1000).pipe(
       tap(() => {
-        console.log(task, 'в начале приходит ли карта');
         const tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as CreateTask[];
         tasks.find((value, index) => {
           if (
@@ -23,17 +17,29 @@ export class TaskDataService {
             value.description === task.description &&
             value.status.id === task.status.id
           ) {
-            tasks[index].status.id = column.id;
+            tasks[index].status.id = columnId;
           }
         });
-        console.log('я тут');
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+      }),
+    );
+  }
+
+  changeUserTask(task: CreateTask) {
+    return timer(1000).pipe(
+      tap(() => {
+        const tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as CreateTask[];
+        tasks.find((value, index) => {
+          if (value.title === task.title && value.description === task.description) {
+            tasks[index].executorId = task.executorId;
+          }
+        });
         localStorage.setItem('tasks', JSON.stringify(tasks));
       }),
     );
   }
 
   createTask(newTask: CreateTask) {
-    // почему я должен ставить таймер, когда имитирую отправку на бэк? Не должен же?
     return timer(1000).pipe(
       tap(() => {
         const tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as CreateTask[];
@@ -61,6 +67,4 @@ export class TaskDataService {
       }),
     );
   }
-
-  // filterTask(task) {}
 }

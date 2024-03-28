@@ -4,9 +4,9 @@
   width: 300px;
   display: flex;
   flex-direction: column;
-  height: 90vh;
   border-radius: 10px;
   border: 3px solid transparent;
+  min-height: 80vh;
 }
 
 .host:hover {

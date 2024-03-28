@@ -8,12 +8,19 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { CreateTaskComponent } from './layout/create-task/create-task.component';
-import { TaskColumn, User } from './shared/models/interfaces/task.interface';
+import { Status, User } from './shared/models/interfaces/task.interface';
 import { TaskBoardModule } from './layout/task-board/task-board.module';
+import { DetailCardComponent } from './layout/detail-card/detail-card.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DetailCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,6 +28,12 @@ registerLocaleData(localeRu, 'ru');
     TaskBoardModule,
     MatButtonModule,
     CreateTaskComponent,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
+    ReactiveFormsModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
   bootstrap: [AppComponent],
@@ -29,7 +42,7 @@ registerLocaleData(localeRu, 'ru');
 export class AppModule {
   // имитация бэка
   constructor() {
-    const statuses: TaskColumn[] = [
+    const statuses: Status[] = [
       {
         name: 'Открыты',
         id: 'ac9b1d4b-fcab-400b-9f52-e81ffa8eaf4f',

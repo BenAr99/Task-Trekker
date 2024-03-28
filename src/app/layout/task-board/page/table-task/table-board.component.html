@@ -1,6 +1,6 @@
 <header>
-  <input class="search-input" placeholder="Поиск">
-  <button (click)="openDialog()" mat-mini-fab color="primary">
+  <input class="search-input" [formControl]="this.filterText" placeholder="Поиск по задачам">
+  <button  (click)="openDialog()" mat-mini-fab color="primary">
     <mat-icon>list</mat-icon>
   </button>
 </header>
@@ -12,7 +12,7 @@
       cdkDropList
       [cdkDropListData]="taskToTaskColumn[item.id]"
       class="example-list"
-      (cdkDropListDropped)="drop($event, item)"
+      (cdkDropListDropped)="drop($event, item.id)"
     >
       <app-table-card
         cdkDrag

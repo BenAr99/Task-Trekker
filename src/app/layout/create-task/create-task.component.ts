@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
-import { Priority, TaskColumn, User } from '../../shared/models/interfaces/task.interface';
+import { CreateTaskForm, Status, User } from '../../shared/models/interfaces/task.interface';
 import { Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -13,15 +13,7 @@ import { CommonModule } from '@angular/common';
 import { UserDataService } from '../task-board/services/user-data.service';
 import { Observable } from 'rxjs';
 import { PRIORITY_OPTIONS } from '../../shared/constants/priority.const';
-import { TaskColumnService } from '../task-board/services/task-column.service';
-interface CreateTaskForm {
-  title: FormControl<string | null>;
-  description: FormControl<string | null>;
-  status: FormControl<TaskColumn | null>;
-  priority: FormControl<Priority | null>;
-  deadlineDate: FormControl<Date | null>;
-  executorId: FormControl<string | null>;
-}
+import { StatusService } from '../task-board/services/status.service';
 
 @Component({
   selector: 'app-create-task',
@@ -42,14 +34,14 @@ interface CreateTaskForm {
 export class CreateTaskComponent {
   createCardForm: FormGroup;
   userList: Observable<User[]>;
-  statusList: Observable<TaskColumn[]>;
+  statusList: Observable<Status[]>;
   priority = PRIORITY_OPTIONS;
 
   constructor(
     private router: Router,
     private taskDataService: TaskDataService,
     private userData: UserDataService,
-    private status: TaskColumnService,
+    private status: StatusService,
   ) {
     this.statusList = this.getStatus();
     this.userList = this.getUsers();
@@ -64,7 +56,7 @@ export class CreateTaskComponent {
   }
 
   getStatus() {
-    return this.status.getTaskColumn();
+    return this.status.getStatuses();
   }
   getUsers() {
     return this.userData.getUsers();

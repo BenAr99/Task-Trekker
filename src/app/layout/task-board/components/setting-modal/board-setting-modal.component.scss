@@ -1,10 +1,14 @@
 .setting-modal {
-  padding: 10px 0;
   z-index: 1;
   top: 60px;
   left: 35%;
-  background: #f8f9ff;
   position: absolute;
+
+}
+
+.block-modal {
+  background: #f8f9ff;
+  padding: 10px 0;
   width: 450px;
   border-radius: 10px;
   border: 3px solid #d2d2d2;
@@ -19,7 +23,7 @@
 .padding-modal {
   padding: 0 10px;
 }
-
+//todo
 hr {
   width: 100%;
   border: none;
@@ -30,6 +34,12 @@ hr {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.footer-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mat-mdc-form-field-flex {

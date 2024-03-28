@@ -21,7 +21,7 @@
     <div class="grid-input">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Выберите дату</mat-label>
-        <input matInput formControlName="deadlineDate" [matDatepicker]="picker">
+        <input matInput formControlName="deadlineDate" [matDatepicker]="picker" readonly>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -30,7 +30,6 @@
         <mat-label>Выберите приоритет</mat-label>
         <mat-select formControlName="priority">
           <mat-option [value]="item.value" *ngFor="let item of priority">{{ item.label }}</mat-option>
-
         </mat-select>
       </mat-form-field>
 

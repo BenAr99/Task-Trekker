@@ -1,0 +1,87 @@
+<section class="setting-modal">
+  <div class="block-modal">
+    <div class="header-modal padding-modal">
+    <span>
+      Сортировка
+    </span>
+      <button mat-raised-button color="primary" (click)="clearSort()">Сбросить</button>
+    </div>
+    <hr>
+    <form [formGroup]="sortForm">
+      <div class="block-selector padding-modal">
+        <mat-form-field>
+          <mat-label>Сортировка по полю</mat-label>
+          <mat-select formControlName="type">
+            <mat-option value="deadline">Крайний срок</mat-option>
+            <mat-option value="priority">Приоритет</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Сортировка по</mat-label>
+          <mat-select formControlName="option">
+            <mat-option value="ascending">Возрастанию</mat-option>
+            <mat-option value="descending">Убыванию</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+    <div class="footer-modal padding-modal">
+      <button mat-raised-button color="primary" (click)="sort()">Применить</button>
+    </div>
+  </div>
+
+  <div class="block-modal">
+    <div class="header-modal padding-modal">
+    <span>
+      Фильтрация
+    </span>
+      <button mat-raised-button color="primary" (click)="clearFilter()">Сбросить</button>
+    </div>
+    <hr>
+    <form [formGroup]="filterForm">
+      <div class="block-selector padding-modal">
+        <mat-form-field>
+          <mat-label>Сортировка по полю</mat-label>
+          <mat-select formControlName="type" (selectionChange)="filterChange()">
+            <mat-option value="deadline">Крайний срок</mat-option>
+            <mat-option value="priority">Приоритет</mat-option>
+            <mat-option value="user">Пользователь</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <ng-container *ngIf="this.filterType === 'deadline'; else elseBlock">
+          <mat-form-field>
+            <mat-label>Выберите дату</mat-label>
+            <input matInput formControlName="option" [matDatepicker]="picker" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </ng-container>
+        <ng-template #elseBlock>
+          <mat-form-field>
+            <mat-label>Сортировка по</mat-label>
+            <mat-select formControlName="option">
+              <ng-container *ngIf="this.filterType === 'priority'">
+                <mat-option [value]="item.value" *ngFor="let item of currentPriority">
+                  {{ item.label }}
+                </mat-option>
+              </ng-container>
+
+              <ng-container *ngIf="this.filterType === 'user'">
+                <mat-option [value]="item.id" *ngFor="let item of this.usersList">
+                  {{ item.name }}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </ng-template>
+      </div>
+    </form>
+    <div class="footer-modal padding-modal">
+      <button mat-raised-button color="primary" (click)="filter()">Применить</button>
+    </div>
+  </div>
+</section>
+
+
