@@ -37,11 +37,11 @@ export class DetailCardComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.taskDataService
       .getTask()
       .pipe(
-        map((value) => {
+        map((value: Task[]) => {
           return value.find((task) => task.title === this.route.snapshot.paramMap.get('id'));
         }),
         filter((task): task is Task => Boolean(task)),
@@ -59,7 +59,7 @@ export class DetailCardComponent implements OnInit {
       });
   }
 
-  saveTask() {
+  saveTask(): void {
     if (this.createCardForm.valid) {
       this.taskDataService.changeUserTask(this.createCardForm.value).subscribe();
     }

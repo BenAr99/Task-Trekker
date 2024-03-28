@@ -9,7 +9,7 @@ export class TaskDataService {
   tasksBehaviorSubject: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([]);
   transferTask(task: Task, columnId: string) {
     return timer(1000).pipe(
-      tap(() => {
+      tap((): void => {
         const tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as CreateTask[];
         tasks.find((value, index) => {
           if (
@@ -27,7 +27,7 @@ export class TaskDataService {
 
   changeUserTask(task: CreateTask) {
     return timer(1000).pipe(
-      tap(() => {
+      tap((): void => {
         const tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') as CreateTask[];
         tasks.find((value, index) => {
           if (value.title === task.title && value.description === task.description) {

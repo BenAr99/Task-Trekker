@@ -55,14 +55,14 @@ export class CreateTaskComponent {
     });
   }
 
-  getStatus() {
+  getStatus(): Observable<Status[]> {
     return this.status.getStatuses();
   }
-  getUsers() {
+  getUsers(): Observable<User[]> {
     return this.userData.getUsers();
   }
 
-  createTask() {
+  createTask(): void {
     if (this.createCardForm.valid) {
       this.taskDataService.createTask(this.createCardForm.value).subscribe(() => {
         this.router.navigate([`/table-task`]);

@@ -31,7 +31,7 @@ export class TableBoardComponent implements OnInit {
     private statusService: StatusService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     forkJoin({
       statuses: this.statusService.getStatuses(),
       getTask: this.taskDataService.getTask(),
@@ -69,20 +69,19 @@ export class TableBoardComponent implements OnInit {
     } else if (text.length < 1) {
       return this.originTasks;
     }
-    console.log(this.tasks, 'не в ифе');
     return this.tasks.filter((value) => {
       return value.title.toLowerCase().includes(text.toLowerCase());
     });
   }
 
-  openDialog() {
+  openDialog(): void {
     const dialogRef = this.dialog.open(BoardSettingModalComponent);
     dialogRef.closed.subscribe((value) => {
       this.changeTasks = value as Task[];
     });
   }
 
-  drop(event: CdkDragDrop<Task[]>, statusColumn: string) {
+  drop(event: CdkDragDrop<Task[]>, statusColumn: string): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

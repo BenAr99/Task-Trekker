@@ -10,10 +10,10 @@ export class PriorityColorDirective implements OnInit {
   @HostBinding('style.background') background?: string;
   @Input() appPriorityColor!: string;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.colorDetection(this.appPriorityColor);
   }
-  colorDetection(priority: string) {
+  colorDetection(priority: string): void {
     switch (priority) {
       case PRIORITY_MAP[Priority.Low]:
         this.background = 'green';

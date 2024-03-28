@@ -49,7 +49,7 @@ export class BoardSettingModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.taskDataService.getTask().subscribe((value) => {
       this.tasks = value;
     });
@@ -58,7 +58,7 @@ export class BoardSettingModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  sort() {
+  sort(): Task[] {
     this.sortType = this.sortForm.controls['type'].value;
     this.sortOption = this.sortForm.controls['option'].value;
     if (this.sortForm.valid) {
@@ -94,7 +94,7 @@ export class BoardSettingModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  filter() {
+  filter(): Task[] {
     this.filterType = this.filterForm.controls['type'].value;
     this.filterOption = this.filterForm.controls['option'].value;
     if (this.filterForm.valid) {
@@ -121,19 +121,19 @@ export class BoardSettingModalComponent implements OnInit, OnDestroy {
     return [];
   }
 
-  filterByPriority(tasks: Task[]) {
+  filterByPriority(tasks: Task[]): Task[] {
     return tasks.filter((value) => value.priority === this.filterOption);
   }
 
-  filterByUser(tasks: Task[]) {
+  filterByUser(tasks: Task[]): Task[] {
     return tasks.filter((value) => value.executor.id === this.filterOption);
   }
 
-  filterChange() {
+  filterChange(): void {
     this.filterType = this.filterForm.controls['type'].value;
     this.filterOption = this.filterForm.controls['option'].value;
   }
-  clearSort() {
+  clearSort(): void {
     this.taskDataService.tasksBehaviorSubject.next([...this.tasks]);
     this.sortForm.reset();
     if (this.filterForm.valid) {
@@ -141,7 +141,7 @@ export class BoardSettingModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  clearFilter() {
+  clearFilter(): void {
     this.taskDataService.tasksBehaviorSubject.next([...this.tasks]);
     this.filterForm.reset();
     if (this.sortForm.valid) {
@@ -149,7 +149,7 @@ export class BoardSettingModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.dialogRef.close(this.changeableTasks);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Task } from '../../../../shared/models/interfaces/task.interface';
 import { PRIORITY_MAP } from '../../../../shared/constants/priority.const';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ export class TableCardComponent {
   priorityMap = PRIORITY_MAP;
 
   constructor(private router: Router) {}
-  detailTask() {
+  detailTask(): void {
     this.router.navigate([`detail/${this.task?.title}`]);
   }
 }
